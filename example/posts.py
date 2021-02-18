@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 import sqlite3
-import uuid
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = str(uuid.uuid4())
+from main import app
 
 
 def get_db_connection():
@@ -42,7 +40,8 @@ def create():
 @app.route('/<int:post_id>')
 def post(post_id):
   post = get_post(post_id)
-  return render_template('post.html', post=post)
+  from comments import get_comments
+  return render_template('post.html', post=post, comments=get_comments(post_id))
 
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
@@ -79,5 +78,7 @@ def delete(id):
 def index():
   conn = get_db_connection()
   posts = conn.execute('SELECT * FROM posts').fetchall()
+  from comments import get_comment_counts
+
   conn.close()
-  return render_template('index.html', posts=posts)
+  return render_template('index.html', posts=posts, comment_counts=get_comment_counts())
