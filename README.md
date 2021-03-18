@@ -20,54 +20,16 @@ As the functionality grows we want to address the following:
 
 ## Local Development
 
-To run the app locally do the following:
+The app uses Docker for local development:
 
-1. install the dependencies
-1. setup the database
-1. configure flask
-1. start the app
-
-### Install the dependencies
-
-You may choose to use a `virtualenv` to contain the environment for this project, if not skip this part. To install `virtualenv`:
-
-```shell
-pip3 install virtualenv
+Build the app
+```
+docker build -t flask-example .
 ```
 
-Then in the directory of your choice (such as `~/envs`):
-
-```shell
-virtualenv -p python3 flask-example
-source flask-example/bin/activate
+Run the app
+```
+docker run -d -p 5000:5000 flask-example
 ```
 
-Now install the dependencies from the root directory of this project:
-
-```shell
-pip3 install -r requirements.txt
-```
-
-### Setup the database
-
-Run these command from the `example` directory:
-
-```shell
-python3 init_db.py
-python3 migration-01.py
-```
-
-### Configure Flask
-
-```shell
-export FLASK_ENV=development
-export FLASK_APP=main
-```
-
-### Star the app
-
-Run this command from the `example` directory:
-
-```shell
-flask run
-```
+Then visit this URL in your browser: `http://localhost:5000`
