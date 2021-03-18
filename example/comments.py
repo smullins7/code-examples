@@ -1,23 +1,29 @@
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import render_template
+from sqlalchemy import func
 from werkzeug.exceptions import abort
-import sqlite3
 
-from main import app
+from main import app, db
 
 
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+class Comments(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    created = db.Column(db.DateTime, server_default=db.func.now())
+    post_id = db.Column(db.Integer)
+    content = db.Column(db.String())
+
+    def __init__(self, post_id, content):
+        self.post_id = post_id
+        self.content = content
+
 
 def db_get_comment(comment_id):
-    conn = get_db_connection()
-    comment = conn.execute('SELECT * FROM comments WHERE id = ?',
-                        (comment_id,)).fetchone()
-    conn.close()
-    if comment is None:
+    post = db.session.query(Comments).get(comment_id)
+    if post is None:
         abort(404)
-    return comment
+    return post
+
 
 @app.route('/comments/<int:comment_id>')
 def get_comment(comment_id):
@@ -26,14 +32,8 @@ def get_comment(comment_id):
 
 
 def get_comments(post_id):
-    conn = get_db_connection()
-    comments = conn.execute('SELECT * FROM comments where post_id = ?', (post_id, )).fetchall()
-    conn.close()
-    return comments
+    return db.session.query(Comments).filter(Comments.post_id == post_id).all()
+
 
 def get_comment_counts():
-    conn = get_db_connection()
-    rows = conn.execute('SELECT post_id, count(*) FROM comments').fetchall()
-    counts_by_post_id = dict([(r[0], r[1]) for r in rows])
-    conn.close()
-    return counts_by_post_id
+    return dict(db.session.query(Comments.post_id, func.count(Comments.post_id)).group_by(Comments.post_id).all())

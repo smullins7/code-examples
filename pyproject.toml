@@ -2,7 +2,7 @@
 name = "Flask Example"
 version = "0.1.0"
 description = "An example application using Flask, a database, Docker, etc"
-authors = ["Stephen Mullins <smullins7@tempus.com>"]
+authors = ["Stephen Mullins <smullins7@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -12,6 +12,8 @@ itsdangerous= "1.1.0"
 Jinja2 = "2.11.3"
 MarkupSafe = "1.1.1"
 Werkzeug = "1.0.1"
+Flask-SQLAlchemy = "2.5.1"
+Flask-Migrate = "2.7.0"
 
 [tool.poetry.dev-dependencies]
 

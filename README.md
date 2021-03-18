@@ -33,3 +33,17 @@ docker run -d -p 5000:5000 flask-example
 ```
 
 Then visit this URL in your browser: `http://localhost:5000`
+
+### DB Migrations
+
+Whenever making changes to the models run this command once the changes are in place:
+```
+flask db migrate -m "Your message here"
+```
+
+This will produce a migration script like:
+```
+example/migrations/versions/177e5febe83c_.py
+```
+
+You can verify the script looks correct. When the application is started up database migrations will run automatically to apply those changes.

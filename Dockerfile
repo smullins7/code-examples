@@ -11,13 +11,10 @@ COPY pyproject.toml poetry.lock /app/
 RUN poetry export --without-hashes -f requirements.txt | pip install -r /dev/stdin
 
 COPY example /app
-RUN python3 init_db.py
-RUN python3 migration-01.py
 
 ENV FLASK_ENV=development
 ENV FLASK_APP=main
-ENV FLASK_RUN_HOST=0.0.0.0
-
 EXPOSE 5000
-ENTRYPOINT ["flask"]
-CMD ["run"]
+
+RUN chmod u+x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
