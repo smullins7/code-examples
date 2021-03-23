@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "Flask Example"
+version = "0.1.0"
+description = "An example application using Flask, a database, Docker, etc"
+authors = ["Stephen Mullins <smullins7@tempus.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "7.1.2"
+Flask = "1.1.2"
+itsdangerous= "1.1.0"
+Jinja2 = "2.11.3"
+MarkupSafe = "1.1.1"
+Werkzeug = "1.0.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
