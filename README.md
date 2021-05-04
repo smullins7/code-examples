@@ -46,4 +46,4 @@ This will produce a migration script like:
 example/migrations/versions/177e5febe83c_.py
 ```
 
-You can verify the script looks correct. When the application is started up database migrations will run automatically to apply those changes.
+You can verify the script looks correct. When the application is started up, database migrations will run automatically to apply those changes.

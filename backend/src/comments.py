@@ -1,8 +1,8 @@
-from flask import render_template
+from flask import jsonify
 from sqlalchemy import func
 from werkzeug.exceptions import abort
 
-from main import app, db
+from app import app, db
 
 
 class Comments(db.Model):
@@ -27,8 +27,7 @@ def db_get_comment(comment_id):
 
 @app.route('/comments/<int:comment_id>')
 def get_comment(comment_id):
-    comment = db_get_comment(comment_id)
-    return render_template('comment.html', comment=comment)
+    return jsonify(db_get_comment(comment_id))
 
 
 def get_comments(post_id):
