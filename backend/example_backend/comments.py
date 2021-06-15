@@ -1,7 +1,8 @@
-from app import app, db
 from flask import jsonify
 from sqlalchemy import func
 from werkzeug.exceptions import abort
+
+from example_backend.app import app, db
 
 
 class Comments(db.Model):
