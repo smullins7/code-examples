@@ -11,10 +11,10 @@ COPY migrations /app/migrations
 # doing this because Docker is already a contained environment so virtualenv seems unnecessary
 RUN poetry export --without-hashes -f requirements.txt | pip install -r /dev/stdin
 
-COPY src/ /app
+COPY example_backend/ /app/example_backend
 
 ENV FLASK_ENV=development
-ENV FLASK_APP=app
+ENV FLASK_APP=example_backend.app
 EXPOSE 5000
 
 RUN chmod u+x /app/entrypoint.sh

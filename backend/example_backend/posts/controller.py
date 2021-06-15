@@ -2,23 +2,10 @@ import http
 
 import flask
 from flask import jsonify, redirect, request, url_for
-from sqlalchemy_serializer import SerializerMixin
 from werkzeug.exceptions import abort
 
-from example_backend.app import app, db
-
-
-class Posts(db.Model, SerializerMixin):
-    __tablename__ = "posts"
-
-    id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, server_default=db.func.now())
-    title = db.Column(db.String())
-    content = db.Column(db.String())
-
-    def __init__(self, title, content):
-        self.title = title
-        self.content = content
+from example_backend.app import app
+from example_backend.posts import dao
 
 
 class BadRequest(Exception):
@@ -51,25 +38,22 @@ def create():
     if "title" not in request_json:
         raise BadRequest("Title is required")
     else:
-        post = Posts(title=request_json["title"], content=request_json["content"])
-        db.session.add(post)
-        db.session.commit()
+        post = dao.insert(request_json["title"], request_json["content"])
         return jsonify(post.to_dict())
 
 
 @app.route("/posts/<int:post_id>")
 def get_post(post_id):
-    post = db.session.query(Posts).get(post_id)
+    post = dao.find(post_id)
     if post is None:
         abort(404)
     # from comments import get_comments
     return jsonify(post.to_dict())
 
 
-@app.route("/posts/<int:id>/edit", methods=("GET", "POST"))
-def edit(id):
-    post = get_post(id)
-
+@app.route("/posts/<int:post_id>/edit", methods=("GET", "POST"))
+def edit(post_id):
+    post = get_post(post_id)
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
@@ -77,9 +61,7 @@ def edit(id):
         if not title:
             raise BadRequest("Title is required")
         else:
-            post.title = title
-            post.content = content
-            db.session.commit()
+            dao.update(post_id, title, content)
             return redirect(url_for("index"))
 
     return jsonify(post.to_dict())
@@ -87,15 +69,10 @@ def edit(id):
 
 @app.route("/posts<int:post_id>/delete", methods=("POST",))
 def delete(post_id):
-    post = get_post(post_id)
-    db.session.delete(post)
-    db.session.commit()
+    dao.delete(post_id)
     return "", http.HTTPStatus.NO_CONTENT
 
 
 @app.route("/posts")
 def index():
-    posts = db.session.query(Posts).all()
-    # from comments import get_comment_counts
-
-    return jsonify([post.to_dict() for post in posts])
+    return jsonify([post.to_dict() for post in dao.find_all()])

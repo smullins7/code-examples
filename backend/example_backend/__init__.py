@@ -1,3 +1,3 @@
 import importlib.metadata as importlib_metadata
 
-__version__ = importlib_metadata.version("example_backend")
+#__version__ = importlib_metadata.version("example_backend")

@@ -1,6 +1,6 @@
 import unittest
 
-from example_backend.posts import BadRequest
+from example_backend.posts.controller import BadRequest
 
 
 class BadRequestTestCase(unittest.TestCase):
