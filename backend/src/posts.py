@@ -44,7 +44,7 @@ def handle_invalid_usage(error):
     return response
 
 
-@app.route('/create', methods=('POST', ))
+@app.route('/posts/create', methods=('POST', ))
 def create():
     request_json = flask.request.json
 
@@ -57,7 +57,7 @@ def create():
         return jsonify(post.to_dict())
 
 
-@app.route('/<int:post_id>')
+@app.route('/posts/<int:post_id>')
 def get_post(post_id):
     post = db.session.query(Posts).get(post_id)
     if post is None:
@@ -66,7 +66,7 @@ def get_post(post_id):
     return jsonify(post.to_dict())
 
 
-@app.route('/<int:id>/edit', methods=('GET', 'POST'))
+@app.route('/posts/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
     post = get_post(id)
 
@@ -85,7 +85,7 @@ def edit(id):
     return jsonify(post.to_dict())
 
 
-@app.route('/<int:post_id>/delete', methods=('POST',))
+@app.route('/posts<int:post_id>/delete', methods=('POST',))
 def delete(post_id):
     post = get_post(post_id)
     db.session.delete(post)
@@ -93,7 +93,7 @@ def delete(post_id):
     return '', http.HTTPStatus.NO_CONTENT
 
 
-@app.route('/')
+@app.route('/posts')
 def index():
     posts = db.session.query(Posts).all()
     # from comments import get_comment_counts

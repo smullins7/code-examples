@@ -20,6 +20,19 @@ As the functionality grows we want to address the following:
 
 ## Local Development
 
+To run the entire stack simply do:
+```shell
+docker-compose up -d --build
+```
+
+This will start up the front end, back end and database. You can access the front end in your browser via [http://localhost:3000](localhost:3000)
+
+If you want to curl the backend directly you can, e.g.
+```shell
+curl localhost:5000/posts
+```
+
+
 The app uses Docker for local development:
 
 Build the app
@@ -46,4 +59,4 @@ This will produce a migration script like:
 example/migrations/versions/177e5febe83c_.py
 ```
 
-You can verify the script looks correct. When the application is started up, database migrations will run automatically to apply those changes.
+You can verify the script looks correct. When the application starts up, database migrations will run automatically to apply those changes.

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
     
 const Posts = ({ posts }) => {
   return (
@@ -7,7 +8,7 @@ const Posts = ({ posts }) => {
       {posts.map((post) => (
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">{post.title}</h5>
+            <Link to={`/posts/${post.id}`}><h5 class="card-title">{post.title}</h5></Link>
           </div>
         </div>
       ))}
