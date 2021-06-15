@@ -1,11 +1,10 @@
 import http
 
 import flask
+from app import app, db
 from flask import jsonify, redirect, request, url_for
 from sqlalchemy_serializer import SerializerMixin
 from werkzeug.exceptions import abort
-
-from app import app, db
 
 
 class Posts(db.Model, SerializerMixin):

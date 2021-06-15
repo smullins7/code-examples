@@ -33,5 +33,4 @@ CORS(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-import comments
-import posts
+from example_backend import comments, posts
