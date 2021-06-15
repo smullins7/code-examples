@@ -24,7 +24,7 @@ dictConfig({
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = str(uuid.uuid4())
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://exampleuser:dev@database/example'
 CORS(app)
 
 db = SQLAlchemy(app)

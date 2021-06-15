@@ -32,6 +32,10 @@ If you want to curl the backend directly you can, e.g.
 curl localhost:5000/posts
 ```
 
+If you want to access the database directly you can (assuming you have the client installed), e.g.
+```shell
+mysql -uexampleuser -pdev -h 127.0.0.1 -P 3306 example
+```
 
 The app uses Docker for local development:
 

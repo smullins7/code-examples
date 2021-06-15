@@ -4,7 +4,8 @@ WORKDIR /app
 
 RUN pip install poetry==1.1.5
 
-COPY example.sqlite3 entrypoint.sh pyproject.toml poetry.lock /app/
+COPY entrypoint.sh pyproject.toml poetry.lock /app/
+COPY migrations /app/migrations
 
 # use poetry to emit the dependencies but use pip to install without a virtualenv
 # doing this because Docker is already a contained environment so virtualenv seems unnecessary
