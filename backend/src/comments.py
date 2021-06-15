@@ -6,7 +6,7 @@ from app import app, db
 
 
 class Comments(db.Model):
-    __tablename__ = 'comments'
+    __tablename__ = "comments"
 
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, server_default=db.func.now())
@@ -25,7 +25,7 @@ def db_get_comment(comment_id):
     return post
 
 
-@app.route('/comments/<int:comment_id>')
+@app.route("/comments/<int:comment_id>")
 def get_comment(comment_id):
     return jsonify(db_get_comment(comment_id))
 

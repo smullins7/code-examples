@@ -79,4 +79,3 @@ class Post extends Component {
 
 
 export default Main;
-

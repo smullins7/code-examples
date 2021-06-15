@@ -1,7 +1,7 @@
 import http
 
 import flask
-from flask import request, url_for, redirect, jsonify
+from flask import jsonify, redirect, request, url_for
 from sqlalchemy_serializer import SerializerMixin
 from werkzeug.exceptions import abort
 
@@ -9,7 +9,7 @@ from app import app, db
 
 
 class Posts(db.Model, SerializerMixin):
-    __tablename__ = 'posts'
+    __tablename__ = "posts"
 
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, server_default=db.func.now())
@@ -33,7 +33,7 @@ class BadRequest(Exception):
 
     def to_dict(self):
         rv = dict(self.payload or ())
-        rv['message'] = self.message
+        rv["message"] = self.message
         return rv
 
 
@@ -44,12 +44,12 @@ def handle_invalid_usage(error):
     return response
 
 
-@app.route('/posts/create', methods=('POST', ))
+@app.route("/posts/create", methods=("POST",))
 def create():
     request_json = flask.request.json
 
     if "title" not in request_json:
-        raise BadRequest('Title is required')
+        raise BadRequest("Title is required")
     else:
         post = Posts(title=request_json["title"], content=request_json["content"])
         db.session.add(post)
@@ -57,43 +57,43 @@ def create():
         return jsonify(post.to_dict())
 
 
-@app.route('/posts/<int:post_id>')
+@app.route("/posts/<int:post_id>")
 def get_post(post_id):
     post = db.session.query(Posts).get(post_id)
     if post is None:
         abort(404)
-    #from comments import get_comments
+    # from comments import get_comments
     return jsonify(post.to_dict())
 
 
-@app.route('/posts/<int:id>/edit', methods=('GET', 'POST'))
+@app.route("/posts/<int:id>/edit", methods=("GET", "POST"))
 def edit(id):
     post = get_post(id)
 
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
 
         if not title:
-            raise BadRequest('Title is required')
+            raise BadRequest("Title is required")
         else:
             post.title = title
             post.content = content
             db.session.commit()
-            return redirect(url_for('index'))
+            return redirect(url_for("index"))
 
     return jsonify(post.to_dict())
 
 
-@app.route('/posts<int:post_id>/delete', methods=('POST',))
+@app.route("/posts<int:post_id>/delete", methods=("POST",))
 def delete(post_id):
     post = get_post(post_id)
     db.session.delete(post)
     db.session.commit()
-    return '', http.HTTPStatus.NO_CONTENT
+    return "", http.HTTPStatus.NO_CONTENT
 
 
-@app.route('/posts')
+@app.route("/posts")
 def index():
     posts = db.session.query(Posts).all()
     # from comments import get_comment_counts

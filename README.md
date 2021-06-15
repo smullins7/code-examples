@@ -2,7 +2,7 @@
 
 Example REST service using Flask. This repo is meant for demonstration/teaching purposes only. Production concerns like performance, scalability and security are absent from this project on purpose.
 
-## Evolution to Target Architecture 
+## Evolution to Target Architecture
 
 As a means of demonstrating how code evolves from an often overly simple implementation to a convoluted one, the following are the iterations of design and functionality for this project:
 
