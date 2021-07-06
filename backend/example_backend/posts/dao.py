@@ -1,5 +1,6 @@
-from example_backend.app import db
 from sqlalchemy_serializer import SerializerMixin
+
+from example_backend.app import db
 
 
 class Posts(db.Model, SerializerMixin):

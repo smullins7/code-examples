@@ -1,22 +1,23 @@
 import unittest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from example_backend.posts import dao
+
 from sqlalchemy.ext.declarative import declarative_base
+
+from example_backend.app import app, db
+from example_backend.posts import dao
 
 Base = declarative_base()
 
 
 class DAOTestCase(unittest.TestCase):
-    engine = create_engine('sqlite:///:memory:')
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    @classmethod
+    def setUpClass(cls):
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite://"
 
     def setUp(self):
-        Base.metadata.create_all(self.engine)
+        db.create_all()
 
     def tearDown(self):
-        Base.metadata.drop_all(self.engine)
+        db.drop_all()
 
     def test_find(self):
         result = dao.find_all()

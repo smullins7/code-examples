@@ -1,7 +1,8 @@
 import http
+from typing import Dict
 
 import flask
-from flask import jsonify, redirect, request, url_for
+from flask import Response, jsonify, redirect, request, url_for
 from werkzeug.exceptions import abort
 
 from example_backend.app import app
@@ -11,21 +12,21 @@ from example_backend.posts import dao
 class BadRequest(Exception):
     status_code = 400
 
-    def __init__(self, message, status_code=None, payload=None):
+    def __init__(self, message: str, status_code: int = None, payload=None):
         Exception.__init__(self)
         self.message = message
         if status_code is not None:
             self.status_code = status_code
         self.payload = payload
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         rv = dict(self.payload or ())
         rv["message"] = self.message
         return rv
 
 
 @app.errorhandler(BadRequest)
-def handle_invalid_usage(error):
+def handle_invalid_usage(error: BadRequest) -> Response:
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response
