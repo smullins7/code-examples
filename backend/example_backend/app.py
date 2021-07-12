@@ -6,6 +6,9 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
+from example_backend.exc.bad_request import BadRequest, handle_bad_request
+from example_backend.exc.not_found import NotFound, handle_not_found
+
 dictConfig(
     {
         "version": 1,
@@ -30,6 +33,9 @@ app.config["SECRET_KEY"] = str(uuid.uuid4())
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://exampleuser:dev@database/example"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 CORS(app)
+
+app.register_error_handler(BadRequest, handle_bad_request)
+app.register_error_handler(NotFound, handle_not_found)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

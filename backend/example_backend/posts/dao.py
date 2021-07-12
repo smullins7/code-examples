@@ -10,6 +10,7 @@ class Posts(db.Model, SerializerMixin):
     created = db.Column(db.DateTime, server_default=db.func.now())
     title = db.Column(db.String())
     content = db.Column(db.String())
+    comments = db.relationship('Comments')
 
     def __init__(self, title, content):
         self.title = title

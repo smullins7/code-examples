@@ -1,9 +1,21 @@
 import unittest
 
 from example_backend.app import app, db
-from example_backend.posts.controller import BadRequest, handle_invalid_usage
 
-BAD_REQ = BadRequest("unit test message", status_code=401, payload={"k1": "v1"})
+
+def insert_test_post():
+    db.engine.execute(
+        "INSERT INTO Posts (id, title, content) VALUES (:post_id, :title, :content)",
+        [{"post_id": 1, "title": "title-1", "content": "content-1"}],
+    )
+
+
+# TODO see if this is actually working
+def insert_test_comment():
+    db.engine.execute(
+        "INSERT INTO Comments (id, post_id, content) VALUES (:comment_id, :post_id, :content)",
+        [{"comment_id": 1, "post_id": 1, "content": "comment-content-1"}],
+    )
 
 
 class PostsControllerTestCase(unittest.TestCase):
@@ -22,26 +34,10 @@ class PostsControllerTestCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def test_to_dict(self):
-        self.assertEqual("unit test message", BAD_REQ.message)
-        self.assertEqual(401, BAD_REQ.status_code)
-        self.assertEqual({"k1": "v1", "message": "unit test message"}, BAD_REQ.to_dict())
-
-    def test_to_dict_default_status_code_no_payload(self):
-        bad_req = BadRequest("unit test message")
-        self.assertEqual("unit test message", bad_req.message)
-        self.assertEqual(400, bad_req.status_code)
-        self.assertEqual({"message": "unit test message"}, bad_req.to_dict())
-
-    def test_handle_invalid_usage(self):
-        response = handle_invalid_usage(BAD_REQ)
-        self.assertEqual(BAD_REQ.status_code, response.status_code)
-        self.assertEqual({"k1": "v1", "message": "unit test message"}, response.json)
-
     def test_create_succeeds(self):
         with app.test_client() as c:
             response_json = c.post(
-                "/posts/create", json={"title": "unit test title", "content": "unit test content"}
+                "/posts", json={"title": "unit test title", "content": "unit test content"}
             ).get_json()
             self.assertEqual(1, response_json["id"])
             self.assertEqual("unit test title", response_json["title"])
@@ -50,42 +46,73 @@ class PostsControllerTestCase(unittest.TestCase):
 
     def test_create_no_title_error(self):
         with app.test_client() as c:
-            response = c.post("/posts/create", json={"content": "unit test content"})
+            response = c.post("/posts", json={"content": "unit test content"})
             self.assertEqual(400, response.status_code)
             self.assertEqual("Title is required", response.get_json()["message"])
 
     def test_get_post_not_found(self):
         with app.test_client() as c:
-            pass
+            response = c.get("/posts/99")
+            self.assertEqual(404, response.status_code)
+            self.assertEqual("No post found with id 99", response.get_json()["message"])
 
     def test_get_post(self):
+        insert_test_post()
         with app.test_client() as c:
-            pass
-
-    def test_edit_get(self):
-        with app.test_client() as c:
-            pass
+            response = c.get("/posts/1")
+            self.assertEqual(200, response.status_code)
+            response_json = response.get_json()
+            self.assertEqual(1, response_json["id"])
+            self.assertEqual("title-1", response_json["title"])
+            self.assertEqual("content-1", response_json["content"])
+            self.assertIsNotNone(response_json.get("created"))
 
     def test_edit_post_no_title(self):
+        insert_test_post()
         with app.test_client() as c:
-            pass
+            response = c.put("/posts/1", json={"content": "unit test content"})
+            self.assertEqual(400, response.status_code)
+            self.assertEqual("Title is required", response.get_json()["message"])
 
     def test_edit_post(self):
+        insert_test_post()
         with app.test_client() as c:
-            pass
+            response = c.put("/posts/1", json={"title": "updated-title", "content": "updated-content"})
+            self.assertEqual(200, response.status_code)
+            response_json = response.get_json()
+            self.assertEqual(1, response_json["id"])
+            self.assertEqual("updated-title", response_json["title"])
+            self.assertEqual("updated-content", response_json["content"])
+            self.assertIsNotNone(response_json.get("created"))
 
     def test_delete(self):
+        insert_test_post()
         with app.test_client() as c:
-            pass
+            response = c.delete("/posts/1")
+            self.assertEqual(204, response.status_code)
 
     def test_delete_not_found(self):
         with app.test_client() as c:
-            pass
+            response = c.delete("/posts/99")
+            self.assertEqual(404, response.status_code)
+            self.assertEqual("No post found with id 99", response.get_json()["message"])
 
     def test_index_empty(self):
         with app.test_client() as c:
-            pass
+            response = c.get("/posts")
+            self.assertEqual(200, response.status_code)
+            self.assertEqual([], response.get_json())
 
     def test_index(self):
+        insert_test_post()
+        insert_test_comment()
         with app.test_client() as c:
-            pass
+            response = c.get("/posts")
+            self.assertEqual(200, response.status_code)
+            response_json = response.get_json()
+            self.assertEqual(1, len(response_json))
+
+            self.assertEqual(1, response_json[0]["id"])
+            self.assertEqual("title-1", response_json[0]["title"])
+            self.assertEqual("content-1", response_json[0]["content"])
+            self.assertIsNotNone(response_json[0].get("created"))
