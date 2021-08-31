@@ -7,7 +7,6 @@ BAD_REQ = BadRequest("unit test message", status_code=401, payload={"k1": "v1"})
 
 
 class BadRequestTestCase(unittest.TestCase):
-
     def setUp(self):
         self.app_context = app.app_context()
         self.app_context.push()

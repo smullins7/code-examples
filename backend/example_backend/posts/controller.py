@@ -12,7 +12,7 @@ from example_backend.posts import dao
 # TODO only return comment id
 RULES = (
     #'-comments',
-    'comments.id'
+    "comments.id",
 )
 
 

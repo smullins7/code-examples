@@ -6,11 +6,13 @@ from example_backend.app import db
 class Posts(db.Model, SerializerMixin):
     __tablename__ = "posts"
 
+    serialize_only = ("id", "created", "title", "content", "comments")
+
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, server_default=db.func.now())
     title = db.Column(db.String())
     content = db.Column(db.String())
-    comments = db.relationship('Comments')
+    comments = db.relationship("Comments")
 
     def __init__(self, title, content):
         self.title = title

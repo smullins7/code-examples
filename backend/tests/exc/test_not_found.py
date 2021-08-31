@@ -7,7 +7,6 @@ NOT_FOUND = NotFound("unit test message")
 
 
 class NotFoundTestCase(unittest.TestCase):
-
     def setUp(self):
         self.app_context = app.app_context()
         self.app_context.push()

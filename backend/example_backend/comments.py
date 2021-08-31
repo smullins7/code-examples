@@ -10,9 +10,9 @@ class Comments(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, server_default=db.func.now())
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
     content = db.Column(db.String())
-    #comments = db.relationship('Post', backref=db.backref('comment'), lazy='dynamic')
+    # comments = db.relationship('Post', backref=db.backref('comment'), lazy='dynamic')
 
     def __init__(self, post_id, content):
         self.post_id = post_id
