@@ -9,12 +9,6 @@ from example_backend.exc.bad_request import BadRequest
 from example_backend.exc.not_found import NotFound
 from example_backend.posts import dao
 
-# TODO only return comment id
-RULES = (
-    #'-comments',
-    "comments.id",
-)
-
 
 @app.route("/posts", methods=("POST",))
 def create_post():
@@ -59,8 +53,8 @@ def index():
 
 
 def post_to_json(post: dao.Posts):
-    return jsonify(post.to_dict(rules=RULES))
+    return jsonify(post.to_dict())
 
 
 def posts_to_json(posts: List[dao.Posts]):
-    return jsonify([post.to_dict(rules=RULES) for post in posts])
+    return jsonify([post.to_dict() for post in posts])

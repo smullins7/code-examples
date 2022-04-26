@@ -13,6 +13,8 @@ Example REST service using Flask. This repo is meant for demonstration/teaching 
 
 ## Local Development
 
+### Docker
+
 To run the entire stack simply do:
 ```shell
 docker-compose up -d --build
@@ -43,6 +45,20 @@ docker run -d -p 4000:4000 flask-example
 ```
 
 Then visit this URL in your browser: `http://localhost:4000`
+
+### Non-Docker
+
+Ensure the poetry environment has the latest dependencies installed:
+
+```
+poetry install
+```
+
+Either run a mysql server on your machine or via Docker (e.g. `docker-compose -d up database`). Then use make to start the service:
+
+```
+make start
+```
 
 ### DB Migrations
 

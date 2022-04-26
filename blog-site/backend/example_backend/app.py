@@ -1,3 +1,4 @@
+import os
 import uuid
 from logging.config import dictConfig
 
@@ -33,11 +34,11 @@ dictConfig(
     }
 )
 
-
 app = Flask(__name__)
 app.config["SECRET_KEY"] = str(uuid.uuid4())
 # In a production app, credentials would be pulled from secret store
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://exampleuser:dev@db/example"
+DB_HOST = os.environ.get("DB_HOST", "127.0.0.1")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://exampleuser:dev@{DB_HOST}/example"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 CORS(app)
 

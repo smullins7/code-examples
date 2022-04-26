@@ -31,4 +31,12 @@ test: lint
 	pytest -v --cov-report term --cov
 
 
-.PHONY: clean lint test
+start: export FLASK_ENV=development
+start: export FLASK_APP=example_backend.app
+
+start:
+	@echo
+	@echo --- Starting local server ---
+	poetry run ./entrypoint.sh
+
+.PHONY: clean lint test start

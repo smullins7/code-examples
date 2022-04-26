@@ -10,10 +10,6 @@ from example_backend.exc.bad_request import BadRequest
 from example_backend.exc.not_found import NotFound
 from example_backend.posts import dao as posts_dao
 
-RULES = (
-    '-comments.post',
-)
-
 
 @app.route("/posts/<int:post_id>/comments", methods=("POST",))
 def create(post_id):
@@ -65,8 +61,8 @@ def delete(post_id, comment_id):
 
 
 def comment_to_json(comment: dao.Comments):
-    return jsonify(comment.to_dict(rules=RULES))
+    return jsonify(comment.to_dict())
 
 
 def comments_to_json(comments: List[dao.Comments]):
-    return jsonify([comment.to_dict(rules=RULES) for comment in comments])
+    return jsonify([comment.to_dict() for comment in comments])
