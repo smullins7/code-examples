@@ -20,13 +20,18 @@ services:
       context: backend
       dockerfile: Dockerfile
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     ports:
-      - "5000:5000"
+      - "4000:4000"
 
   database:
     container_name: db
     image: mysql:5.7.12
+    healthcheck:
+      test: "/usr/bin/mysql --database=example --user=exampleuser --password=dev -e 'select 1;' --silent"
+      start_period: 10s
+      interval: 5s
     ports:
       - "3306:3306"
     environment:

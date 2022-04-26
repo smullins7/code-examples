@@ -22,15 +22,22 @@ dictConfig(
                 "class": "logging.StreamHandler",
                 "stream": "ext://flask.logging.wsgi_errors_stream",
                 "formatter": "default",
+            },
+            "out": {
+                "class": "logging.FileHandler",
+                "filename": "/tmp/example.log",
+                "formatter": "default",
             }
         },
-        "root": {"level": "INFO", "handlers": ["wsgi"]},
+        "root": {"level": "INFO", "handlers": ["out", "wsgi"]},
     }
 )
 
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = str(uuid.uuid4())
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://exampleuser:dev@database/example"
+# In a production app, credentials would be pulled from secret store
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://exampleuser:dev@db/example"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 CORS(app)
 
@@ -40,5 +47,6 @@ app.register_error_handler(NotFound, handle_not_found)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from example_backend import comments
-from example_backend.posts import controller
+from example_backend.posts import controller as posts_controller
+from example_backend.comments import controller
+

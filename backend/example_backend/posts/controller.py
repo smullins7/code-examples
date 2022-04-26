@@ -17,7 +17,7 @@ RULES = (
 
 
 @app.route("/posts", methods=("POST",))
-def create():
+def create_post():
     request_json = flask.request.json
 
     if "title" not in request_json:
@@ -36,7 +36,7 @@ def get_post(post_id):
 
 
 @app.route("/posts/<int:post_id>", methods=("PUT",))
-def edit(post_id):
+def edit_post(post_id):
     get_post(post_id)
     json_data = request.get_json()
     if "title" not in json_data:
@@ -47,7 +47,7 @@ def edit(post_id):
 
 
 @app.route("/posts/<int:post_id>", methods=("DELETE",))
-def delete(post_id):
+def delete_post(post_id):
     get_post(post_id)
     dao.delete(post_id)
     return "", http.HTTPStatus.NO_CONTENT
@@ -63,4 +63,4 @@ def post_to_json(post: dao.Posts):
 
 
 def posts_to_json(posts: List[dao.Posts]):
-    return jsonify([post.to_dict() for post in posts])
+    return jsonify([post.to_dict(rules=RULES) for post in posts])

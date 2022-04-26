@@ -7,7 +7,7 @@ class Main extends Component {
         posts: []
     }
     componentDidMount() {
-        fetch('http://127.0.0.1:5000/posts')
+        fetch('http://127.0.0.1:4000/posts')
         .then(res => res.json())
         .then((data) => {
           this.setState({ posts: data })
@@ -38,7 +38,7 @@ class Home extends Component {
         posts: []
     }
     componentDidMount() {
-        fetch('http://127.0.0.1:5000/posts')
+        fetch('http://127.0.0.1:4000/posts')
         .then(res => res.json())
         .then((data) => {
           this.setState({ posts: data })
@@ -59,7 +59,7 @@ class Post extends Component {
     }
     componentDidMount() {
         const { postId } = this.props.match.params
-        fetch(`http://127.0.0.1:5000/posts/${postId}`)
+        fetch(`http://127.0.0.1:4000/posts/${postId}`)
         .then(res => res.json())
         .then((data) => {
           this.setState(data)

@@ -1,3 +1,12 @@
+# TODO
+
+1. rename repo, have readme for example dir separate from top level readme
+2. add users to backend
+3. add abstraction to backend
+4. frontend for all functionality on backend
+5. make a decent effort on frontend style
+6. logging/monitoring to backend?
+
 # Flask Example
 
 Example REST service using Flask. This repo is meant for demonstration/teaching purposes only. Production concerns like performance, scalability and security are absent from this project on purpose.
@@ -29,7 +38,7 @@ This will start up the front end, back end and database. You can access the fron
 
 If you want to curl the backend directly you can, e.g.
 ```shell
-curl localhost:5000/posts
+curl localhost:4000/posts
 ```
 
 If you want to access the database directly you can (assuming you have the client installed), e.g.
@@ -46,10 +55,10 @@ docker build -t flask-example .
 
 Run the app
 ```
-docker run -d -p 5000:5000 flask-example
+docker run -d -p 4000:4000 flask-example
 ```
 
-Then visit this URL in your browser: `http://localhost:5000`
+Then visit this URL in your browser: `http://localhost:4000`
 
 ### DB Migrations
 

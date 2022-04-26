@@ -15,7 +15,7 @@ COPY example_backend/ /app/example_backend
 
 ENV FLASK_ENV=development
 ENV FLASK_APP=example_backend.app
-EXPOSE 5000
+EXPOSE 4000
 
 RUN chmod u+x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
