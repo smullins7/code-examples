@@ -4,7 +4,7 @@ from example_backend.app import app, db
 from tests.testdata.db_helper import insert_post, insert_comment
 
 
-class PostsControllerTestCase(unittest.TestCase):
+class CommentsControllerTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         app.config["SERVER_NAME"] = "localhost:5000"
@@ -21,75 +21,79 @@ class PostsControllerTestCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_create_succeeds(self):
+        insert_post()
         with app.test_client() as c:
             response_json = c.post(
-                "/posts", json={"title": "unit test title", "content": "unit test content"}
+                "/posts/1/comments", json={"content": "unit test content"}
             ).get_json()
             self.assertEqual(1, response_json["id"])
-            self.assertEqual("unit test title", response_json["title"])
             self.assertEqual("unit test content", response_json["content"])
             self.assertIsNotNone(response_json["created"])
 
-    def test_create_no_title_error(self):
+    def test_get_comment_post_not_found(self):
         with app.test_client() as c:
-            response = c.post("/posts", json={"content": "unit test content"})
-            self.assertEqual(400, response.status_code)
-            self.assertEqual("Title is required", response.get_json()["message"])
-
-    def test_get_post_not_found(self):
-        with app.test_client() as c:
-            response = c.get("/posts/99")
+            response = c.get("/posts/99/comments/88")
             self.assertEqual(404, response.status_code)
             self.assertEqual("No post found with id 99", response.get_json()["message"])
 
-    def test_get_post(self):
+    # TODO fix this test
+    def test_get_comment_not_found(self):
         insert_post()
         with app.test_client() as c:
-            response = c.get("/posts/1")
+            response = c.get("/posts/1/comments/88")
+            self.assertEqual(404, response.status_code)
+            self.assertEqual("No comment found with id 88", response.get_json()["message"])
+
+    def test_get_comment(self):
+        insert_post()
+        insert_comment()
+        with app.test_client() as c:
+            response = c.get("/posts/1/comments/1")
             self.assertEqual(200, response.status_code)
             response_json = response.get_json()
             self.assertEqual(1, response_json["id"])
-            self.assertEqual("title-1", response_json["title"])
             self.assertEqual("content-1", response_json["content"])
             self.assertIsNotNone(response_json.get("created"))
 
-    def test_edit_post_no_title(self):
+    def test_edit_comment(self):
         insert_post()
+        insert_comment()
         with app.test_client() as c:
-            response = c.put("/posts/1", json={"content": "unit test content"})
-            self.assertEqual(400, response.status_code)
-            self.assertEqual("Title is required", response.get_json()["message"])
-
-    def test_edit_post(self):
-        insert_post()
-        with app.test_client() as c:
-            response = c.put("/posts/1", json={"title": "updated-title", "content": "updated-content"})
+            response = c.put("/posts/1/comments/1", json={ "content": "updated-content"})
             self.assertEqual(200, response.status_code)
             response_json = response.get_json()
             self.assertEqual(1, response_json["id"])
-            self.assertEqual("updated-title", response_json["title"])
             self.assertEqual("updated-content", response_json["content"])
             self.assertIsNotNone(response_json.get("created"))
 
     def test_delete(self):
         insert_post()
+        insert_comment()
         with app.test_client() as c:
-            response = c.delete("/posts/1")
+            response = c.delete("/posts/1/comments/1")
             self.assertEqual(204, response.status_code)
 
-    def test_delete_not_found(self):
+    def test_delete_post_not_found(self):
         with app.test_client() as c:
             response = c.delete("/posts/99")
             self.assertEqual(404, response.status_code)
             self.assertEqual("No post found with id 99", response.get_json()["message"])
 
-    def test_index_empty(self):
+    # TODO fix this test case
+    def test_delete_comment_not_found(self):
+        insert_post()
+        with app.test_client() as c:
+            response = c.delete("/posts/1/comments/88")
+            self.assertEqual(404, response.status_code)
+            self.assertEqual("No comment found with id 88", response.get_json()["message"])
+
+    def test_get_comments_empty(self):
         with app.test_client() as c:
             response = c.get("/posts")
             self.assertEqual(200, response.status_code)
             self.assertEqual([], response.get_json())
 
-    def test_index(self):
+    def test_get_comments(self):
         insert_post()
         insert_comment()
         with app.test_client() as c:

@@ -1,5 +1,6 @@
 # TODO
 
+1. add audit/history
 2. add users to backend
 3. add abstraction to backend
 4. frontend for all functionality on backend
