@@ -1,4 +1,6 @@
+import moment from "moment";
 import React, {Component, Fragment} from "react";
+import {Link} from "react-router-dom";
 
 class BlogPost extends Component {
     state = {
@@ -16,9 +18,21 @@ class BlogPost extends Component {
     render() {
         return (
             <Fragment>
-                <h1>{this.state.post.title}</h1>
-                <p>{this.state.post.content}</p>
-                <p>{this.state.post.created}</p>
+                <div className="container">
+                <div className="row g-5">
+                    <div className="col-md-8">
+                        <article className="blog-post">
+                            <h2 className="blog-post-title mb-1">{this.state.post.title}</h2>
+                            <p className="blog-post-meta">{moment.utc(this.state.post.created).format("LLLL")} by <a href="#">TODO</a></p>
+
+                            <p>{this.state.post.content}</p>
+                        </article>
+                    </div>
+                </div>
+                    <Link to="/new-post">
+                        <button type="button" className="btn btn-primary btn-lg px-4 gap-3">Edit</button>
+                    </Link>
+                </div>
             </Fragment>
         );
     }

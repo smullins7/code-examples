@@ -1,38 +1,41 @@
 import React, {Component, useState} from "react";
-import { Route, Switch } from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
+import OAuth2Login from "react-simple-oauth2-login";
 import About from "../pages/About";
 import NotFound from "../pages/NotFound";
 import BlogPost from "./BlogPost";
 import BlogPostsList from "./BlogPostsList";
 import ErrorAlert from "./ErrorAlert";
-import OAuth2Login from "react-simple-oauth2-login";
-import NavBar from "./NavBar";
+import Footer from "./Footer";
+import Header from "./Header";
 import NewBlogPost from "./NewBlogPost";
 import UserSettings from "./UserSettings";
 
 class Main extends Component {
-  render() {
-    return (
-        <>
-            <NavBar />
-            <Switch>
-                <Route path="/" exact>
-                    <BlogPostsList />
-                </Route>
-                <Route path="/posts/:postId"  component={BlogPost} />
-                <Route path="/new-post" component={NewBlogPost} />
-                <Route path= "/settings">
-                    <UserSettings />
-                </Route>
-                <Route path= "/about">
-                    <About />
-                </Route>
-                <Route path="*">
-                    <NotFound />
-                </Route>
-            </Switch>
-        </>)
-  }
+
+    render() {
+        return (
+            <>
+                <Header/>
+                <Switch>
+                    <Route path="/" exact>
+                        <BlogPostsList/>
+                    </Route>
+                    <Route path="/posts/:postId" component={BlogPost}/>
+                    <Route path="/new-post" component={NewBlogPost}/>
+                    <Route path="/settings">
+                        <UserSettings/>
+                    </Route>
+                    <Route path="/about">
+                        <About/>
+                    </Route>
+                    <Route path="*">
+                        <NotFound/>
+                    </Route>
+                </Switch>
+                <Footer/>
+            </>)
+    }
 }
 
 
@@ -40,11 +43,11 @@ export function OauthExample() {
     const [accessToken, setAccessToken] = useState(null);
     const [error, setError] = useState(null);
 
-    const onSuccess = ({ access_token: token }) => setAccessToken(token);
+    const onSuccess = ({access_token: token}) => setAccessToken(token);
     return (
         <div className="column">
             {
-                error && <ErrorAlert error={error} />
+                error && <ErrorAlert error={error}/>
             }
 
             <OAuth2Login

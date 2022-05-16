@@ -14,7 +14,7 @@ class NewBlogPost extends Component {
         e.preventDefault();
         console.log(this.state);
         try {
-            let res = await fetch("http://127.0.0.1:4000/posts", {
+            fetch("http://127.0.0.1:4000/posts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -23,10 +23,15 @@ class NewBlogPost extends Component {
                     title: this.state.title,
                     content: this.state.content,
                 }),
-            });
-            let resJson = res.json();
-            console.log(resJson);
-            //this.props.history.push("/posts/${resJson.id}");
+            }).then(response =>
+                response.json().then(data => ({
+                        data: data,
+                        status: response.status
+                    })
+                ).then(res => {
+                    console.log(res.status, res.data);
+                    this.props.history.push(`/posts/${res.data.id}`);
+                }));
         } catch (err) {
             console.log(err);
         }
@@ -41,8 +46,7 @@ class NewBlogPost extends Component {
                     name="title"
                     onChange={this.onChange}
                 />
-                <input
-                    type="textarea"
+                <textarea
                     placeholder="content here"
                     value={this.state.content}
                     name="content"
