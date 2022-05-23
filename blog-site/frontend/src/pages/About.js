@@ -2,10 +2,12 @@ import React from "react";
 
 const About = () => {
     return (
-        <div>
-            <h3>
-                This site is a simple, dummy site meant for teaching/demonstration purposes!
-            </h3>
+        <div className="container">
+            <div className="row g-5">
+                <div className="col-md-8">
+                        <p>This site is a simple, dummy site meant for teaching/demonstration purposes!</p>
+                </div>
+            </div>
         </div>
     )
 }
