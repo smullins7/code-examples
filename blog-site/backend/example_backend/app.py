@@ -28,7 +28,7 @@ dictConfig(
                 "class": "logging.FileHandler",
                 "filename": "/tmp/example.log",
                 "formatter": "default",
-            }
+            },
         },
         "root": {"level": "INFO", "handlers": ["out", "wsgi"]},
     }
@@ -48,6 +48,5 @@ app.register_error_handler(NotFound, handle_not_found)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from example_backend.posts import controller as posts_controller
 from example_backend.comments import controller
-
+from example_backend.posts import controller as posts_controller

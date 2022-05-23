@@ -1,7 +1,8 @@
 import unittest
 
+from tests.testdata.db_helper import insert_comment, insert_post
+
 from example_backend.app import app, db
-from tests.testdata.db_helper import insert_post, insert_comment
 
 
 class PostsControllerTestCase(unittest.TestCase):

@@ -475,7 +475,7 @@ SQLAlchemy = "*"
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -528,7 +528,7 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4ed9e53d01ce0e3981b789496f2292b22fb5de2766a0be04dca03155a809601d"
+content-hash = "954bebc74eba034795644bbb9b5a518c6547f186f173eda78c950935bff76414"
 
 [metadata.files]
 alembic = [

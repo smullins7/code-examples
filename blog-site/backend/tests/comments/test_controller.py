@@ -1,7 +1,8 @@
 import unittest
 
+from tests.testdata.db_helper import insert_comment, insert_post
+
 from example_backend.app import app, db
-from tests.testdata.db_helper import insert_post, insert_comment
 
 
 class CommentsControllerTestCase(unittest.TestCase):
@@ -23,9 +24,7 @@ class CommentsControllerTestCase(unittest.TestCase):
     def test_create_succeeds(self):
         insert_post()
         with app.test_client() as c:
-            response_json = c.post(
-                "/posts/1/comments", json={"content": "unit test content"}
-            ).get_json()
+            response_json = c.post("/posts/1/comments", json={"content": "unit test content"}).get_json()
             self.assertEqual(1, response_json["id"])
             self.assertEqual("unit test content", response_json["content"])
             self.assertIsNotNone(response_json["created"])
@@ -59,7 +58,7 @@ class CommentsControllerTestCase(unittest.TestCase):
         insert_post()
         insert_comment()
         with app.test_client() as c:
-            response = c.put("/posts/1/comments/1", json={ "content": "updated-content"})
+            response = c.put("/posts/1/comments/1", json={"content": "updated-content"})
             self.assertEqual(200, response.status_code)
             response_json = response.get_json()
             self.assertEqual(1, response_json["id"])
