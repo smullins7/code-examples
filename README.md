@@ -8,6 +8,16 @@ My skill set is definitely not UI so any frontend code in here will be very roug
   <img width="450" height="300" src="https://media.giphy.com/media/3orieS4jfHJaKwkeli/giphy.gif" alt="simpsons example">
 </p>
 
+## Prerequisite
+
+This repo uses [pre-commit hooks](https://github.com/pre-commit/pre-commit-hooks) for linting rules. It doesn't have great monorepo support so you'll want to just install it from this directory, then:
+
+```shell
+pre-commit install
+```
+
+With that done, any commits to any project within this repo will run the linter hooks before commiting.
+
 ## Blog Site
 
 [blog-site](./blog-site/README.md) is a simple blogging site, with posts and comments.
