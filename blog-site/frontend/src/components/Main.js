@@ -4,11 +4,11 @@ import OAuth2Login from "react-simple-oauth2-login";
 import About from "../pages/About";
 import NotFound from "../pages/NotFound";
 import BlogPost from "./BlogPost";
+import BlogPostForm from "./BlogPostForm";
 import BlogPostsList from "./BlogPostsList";
 import ErrorAlert from "./ErrorAlert";
 import Footer from "./Footer";
 import Header from "./Header";
-import NewBlogPost from "./NewBlogPost";
 import UserSettings from "./UserSettings";
 
 class Main extends Component {
@@ -22,7 +22,7 @@ class Main extends Component {
                         <BlogPostsList/>
                     </Route>
                     <Route path="/posts/:postId" component={BlogPost}/>
-                    <Route path="/new-post" component={NewBlogPost}/>
+                    <Route path={["/post-form/:postId", "/post-form"]} component={BlogPostForm}/>
                     <Route path="/settings">
                         <UserSettings/>
                     </Route>

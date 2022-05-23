@@ -19,7 +19,7 @@ class BlogPostsList extends Component {
         return (
             <div>
                 <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <Link to="/new-post">
+                    <Link to="/post-form">
                         <button type="button" className="btn btn-primary btn-lg px-4 gap-3">Create New Post!</button>
                     </Link>
                 </div>

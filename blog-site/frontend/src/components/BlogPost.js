@@ -29,7 +29,7 @@ class BlogPost extends Component {
                         </article>
                     </div>
                 </div>
-                    <Link to="/new-post">
+                    <Link to={`/post-form/${this.state.post.id}`}>
                         <button type="button" className="btn btn-primary btn-lg px-4 gap-3">Edit</button>
                     </Link>
                 </div>
