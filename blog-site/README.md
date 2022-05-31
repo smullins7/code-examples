@@ -20,3 +20,10 @@ Things this project _does_ demonstrate:
  - separation of concerns
  - unit tests
  - coding style/checks
+
+# TODO
+
+0. comment CRUS in frontend
+1. Add user login
+2. add audit/history
+3. add tags to posts by author

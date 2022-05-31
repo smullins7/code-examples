@@ -1,13 +1,3 @@
-# TODO
-
-1. add audit/history
-2. add users to backend
-3. add abstraction to backend
-4. frontend for all functionality on backend
-5. make a decent effort on frontend style
-6. logging/monitoring to backend?
-7. add tags to posts by author?
-
 # Backend REST Example
 
 Example REST service using Flask. This repo is meant for demonstration/teaching purposes only. Production concerns like performance, scalability and security are absent from this project on purpose.
@@ -74,3 +64,12 @@ example/migrations/versions/177e5febe83c_.py
 ```
 
 You can verify the script looks correct. When the application starts up, database migrations will run automatically to apply those changes.
+
+## Exercises
+
+The following are small tasks/problems to get familiar with this project:
+
+ - Replace `comment_to_json`/`post_to_json` functions with something re-usable. The goal is if we add additional entities (like tags, audit history, comment voting) we don't need to copy/paste the same code every time
+ - Add `updated_at` timestamps to posts and comments. This will involve a database migration and code change
+ - When returning a post via `/posts` or `/posts/<post-id>`, add an attribute in the JSON response for the number of comments instead of all the comments themselves
+ - Replace the existing delete functionality with "soft deletes"
