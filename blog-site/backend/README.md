@@ -23,6 +23,8 @@ If you want to access the database directly you can (assuming you have the clien
 mysql -uexampleuser -pdev -h 127.0.0.1 -P 3306 example
 ```
 
+_Change the above port if you've configured the database on a different port via the `./blog-site/.env` file._
+
 The app uses Docker for local development:
 
 Build the app
