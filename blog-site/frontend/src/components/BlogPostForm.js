@@ -2,6 +2,7 @@ import {Component} from "react";
 
 class BlogPostForm extends Component {
     state = {
+        id: 0,
         title: "",
         content: "",
     }
@@ -24,12 +25,15 @@ class BlogPostForm extends Component {
             [e.target.name]: e.target.value,
         })
     }
+    isUpdate() {
+        return this.state.id > 0;
+    }
     handleSubmit = async e => {
         e.preventDefault();
         console.log(this.state);
         try {
-            fetch("http://127.0.0.1:4000/posts", {
-                method: "POST",
+            fetch("http://127.0.0.1:4000/posts" + (this.isUpdate() ? `/${this.state.id}`  : ""), {
+                method: this.isUpdate() ? "PUT" : "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },

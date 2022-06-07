@@ -4,6 +4,7 @@ import OAuth2Login from "react-simple-oauth2-login";
 import About from "../pages/About";
 import NotFound from "../pages/NotFound";
 import BlogPost from "./BlogPost";
+import BlogPostDelete from "./BlogPostDelete";
 import BlogPostForm from "./BlogPostForm";
 import BlogPostsList from "./BlogPostsList";
 import ErrorAlert from "./ErrorAlert";
@@ -23,6 +24,7 @@ class Main extends Component {
                     </Route>
                     <Route path="/posts/:postId" component={BlogPost}/>
                     <Route path={["/post-form/:postId", "/post-form"]} component={BlogPostForm}/>
+                    <Route path="/post-del/:postId" component={BlogPostDelete}/>
                     <Route path="/settings">
                         <UserSettings/>
                     </Route>

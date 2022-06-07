@@ -32,6 +32,9 @@ class BlogPost extends Component {
                     <Link to={`/post-form/${this.state.post.id}`}>
                         <button type="button" className="btn btn-primary btn-lg px-4 gap-3">Edit</button>
                     </Link>
+                    <Link to={`/post-del/${this.state.post.id}`}>
+                        <button type="button" className="btn btn-primary btn-lg px-4 gap-3 btn-outline-danger m-2">Delete</button>
+                    </Link>
                 </div>
             </Fragment>
         );
