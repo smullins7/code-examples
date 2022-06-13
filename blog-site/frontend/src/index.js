@@ -4,6 +4,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Main from "./components/Main";
 
 import "./index.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 ReactDOM.render(
   <React.StrictMode>

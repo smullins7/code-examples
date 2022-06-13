@@ -15,6 +15,9 @@ class BlogPost extends Component {
             })
             .catch(console.log)
     }
+    deleteComment() {
+        console.log("TODO: call delete backend and then....redraw the page somehow?");
+    }
     render() {
         return (
             <Fragment>
@@ -33,8 +36,27 @@ class BlogPost extends Component {
                         <button type="button" className="btn btn-primary btn-lg px-4 gap-3">Edit</button>
                     </Link>
                     <Link to={`/post-del/${this.state.post.id}`}>
-                        <button type="button" className="btn btn-primary btn-lg px-4 gap-3 btn-outline-danger m-2">Delete</button>
+                        <button type="button" className="btn btn-primary btn-lg px-4 gap-3 btn-outline-danger m-2"><i className="bi bi-trash"/> Delete</button>
                     </Link>
+                    <hr />
+
+                    {this.state.post.comments?.length > 0 ? (
+                            <h3>Article Comments</h3>
+                        ) : (
+                            <h5 className="font-italic">no comments yet</h5>
+                        )}
+                    {this.state.post.comments?.map(comment => (
+                        <div className="card bg-light mb-3 ml-2 mt-4" key={comment.id} style={{"maxWidth": "35rem"}}>
+                            <div className="card-header">
+                                User Name TODO @ {moment.utc(comment.created).format("LLLL")}
+                            </div>
+                            <div className="card-body">
+                                <p className="card-text">{comment.content}</p>
+                            </div>
+                            <button onClick={this.deleteComment} type="button" className="btn btn-danger m-1" style={{"maxWidth": "6rem"}}>
+                                <i className="bi bi-trash"/> Delete</button>
+                        </div>
+                    ))}
                 </div>
             </Fragment>
         );
