@@ -135,6 +135,19 @@ docs = ["sphinx", "pallets-sphinx-themes", "sphinxcontrib-log-cabinet", "sphinx-
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-alchemydumps"
+version = "0.0.13"
+description = "SQLAlchemy backup/dump tool for Flask"
+category = "main"
+optional = false
+python-versions = ">=3.6.2,<3.10.0"
+
+[package.dependencies]
+Flask = ">=1.0.0"
+Flask-SQLAlchemy = ">=2.4.1,<3.0.0"
+python-decouple = ">=3.3,<4.0"
+
+[[package]]
 name = "flask-cors"
 version = "3.0.10"
 description = "A Flask extension adding a decorator for CORS support"
@@ -398,6 +411,14 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 six = ">=1.5"
 
 [[package]]
+name = "python-decouple"
+version = "3.6"
+description = "Strict separation of settings from code."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "python-editor"
 version = "1.0.4"
 description = "Programmatically open an editor, capture the result."
@@ -527,8 +548,8 @@ watchdog = ["watchdog"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.8"
-content-hash = "954bebc74eba034795644bbb9b5a518c6547f186f173eda78c950935bff76414"
+python-versions = ">=3.8,<3.10.0"
+content-hash = "c9359ea9f7a3898369bef2a1bcaa2780ff8c09ecee97ef3627ad28c60d0339f4"
 
 [metadata.files]
 alembic = [
@@ -627,6 +648,10 @@ filelock = [
 flask = [
     {file = "Flask-1.1.2-py2.py3-none-any.whl", hash = "sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557"},
     {file = "Flask-1.1.2.tar.gz", hash = "sha256:4efa1ae2d7c9865af48986de8aeb8504bf32c7f3d6fdc9353d34b21f4b127060"},
+]
+flask-alchemydumps = [
+    {file = "Flask-AlchemyDumps-0.0.13.tar.gz", hash = "sha256:1de0b7a83914e0e2d699738e48ceae142829c7fab5069ccfa4300ed2046ec37f"},
+    {file = "Flask_AlchemyDumps-0.0.13-py3-none-any.whl", hash = "sha256:67aa07e9061ddcc1db6485196cc2d45d463f71736618b983a9be0b7bc3086b60"},
 ]
 flask-cors = [
     {file = "Flask-Cors-3.0.10.tar.gz", hash = "sha256:b60839393f3b84a0f3746f6cdca56c1ad7426aa738b70d6c61375857823181de"},
@@ -816,6 +841,10 @@ pytest-cov = [
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
+]
+python-decouple = [
+    {file = "python-decouple-3.6.tar.gz", hash = "sha256:2838cdf77a5cf127d7e8b339ce14c25bceb3af3e674e039d4901ba16359968c7"},
+    {file = "python_decouple-3.6-py3-none-any.whl", hash = "sha256:6cf502dc963a5c642ea5ead069847df3d916a6420cad5599185de6bab11d8c2e"},
 ]
 python-editor = [
     {file = "python-editor-1.0.4.tar.gz", hash = "sha256:51fda6bcc5ddbbb7063b2af7509e43bd84bfc32a4ff71349ec7847713882327b"},

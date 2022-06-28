@@ -26,6 +26,8 @@ services:
       - "4000:4000"
     environment:
       DB_HOST: db
+    volumes:
+      - ./backend/db-backups:/app/alchemydumps-backup
 
   database:
     container_name: db

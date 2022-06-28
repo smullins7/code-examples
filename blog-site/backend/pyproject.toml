@@ -5,7 +5,7 @@ description = "An example application using Flask, a database, Docker, etc"
 authors = ["Stephen Mullins <smullins7@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.10.0"
 click = "7.1.2"
 Flask = "1.1.2"
 itsdangerous= "1.1.0"
@@ -19,6 +19,7 @@ Flask-Cors = "^3.0.10"
 PyMySQL = "^1.0.2"
 importlib-metadata = {version = "^3.4.0", python = "<3.8"}
 toml = "^0.10.2"
+flask-alchemydumps = "^0.0.13"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"

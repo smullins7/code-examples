@@ -3,6 +3,7 @@ import uuid
 from logging.config import dictConfig
 
 from flask import Flask
+from flask_alchemydumps import AlchemyDumps
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -47,6 +48,8 @@ app.register_error_handler(NotFound, handle_not_found)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+alchemydumps = AlchemyDumps(app, db)
 
 from example_backend.comments import controller
 from example_backend.posts import controller as posts_controller
