@@ -33,7 +33,7 @@ If you need to run the database on a different port you can just change the `.en
 
 # TODO
 
-0. comment CRUS in frontend
+0.5. database snapshot
 1. Add user login
 2. add audit/history
 3. add tags to posts by author
