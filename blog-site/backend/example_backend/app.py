@@ -51,5 +51,6 @@ migrate = Migrate(app, db)
 
 alchemydumps = AlchemyDumps(app, db)
 
-from example_backend.comments import controller
+from example_backend.comments import controller as comments_controller
 from example_backend.posts import controller as posts_controller
+from example_backend.users import controller as users_controller

@@ -12,6 +12,8 @@ class Login extends Component {
                     const decoded = jwt_decode(credentialResponse.credential);
                     const { cookies } = this.props;
                     cookies.set("logged-in-user", {"name": decoded.name, "email": decoded.email});
+                    console.log(credentialResponse);
+                    console.log(decoded);
                 }}
                 onError={() => {
                     console.log('Login Failed');

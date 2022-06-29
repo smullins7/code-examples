@@ -20,6 +20,8 @@ PyMySQL = "^1.0.2"
 importlib-metadata = {version = "^3.4.0", python = "<3.8"}
 toml = "^0.10.2"
 flask-alchemydumps = "^0.0.13"
+google-auth = "^2.9.0"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"

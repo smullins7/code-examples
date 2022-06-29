@@ -106,6 +106,7 @@ Now the database data has been replaced with the contents from the snapshot.
 
 # TODO
 
-1. Add user login
-2. add audit/history
-3. add tags to posts by author
+1. Add auth to all write endpoints
+2. Frontend should conditionally show buttons based on auth
+3. Frontend should display user names for posts and comments
+4. audit log/history

@@ -9,6 +9,7 @@ from example_backend.comments import dao
 from example_backend.exc.bad_request import BadRequest
 from example_backend.exc.not_found import NotFound
 from example_backend.posts import dao as posts_dao
+from example_backend.users.service import resolve_user
 
 
 @app.route("/posts/<int:post_id>/comments", methods=("POST",))
@@ -19,7 +20,8 @@ def create(post_id):
     if not post:
         raise BadRequest("Could not find post")
     else:
-        comment = dao.insert(post.id, request_json["content"])
+        user, _ = resolve_user()
+        comment = dao.insert(post.id, request_json["content"], user.id)
         return comment_to_json(comment)
 
 

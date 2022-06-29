@@ -8,6 +8,7 @@ from example_backend.app import app
 from example_backend.exc.bad_request import BadRequest
 from example_backend.exc.not_found import NotFound
 from example_backend.posts import dao
+from example_backend.users.service import resolve_user
 
 
 @app.route("/posts", methods=("POST",))
@@ -17,7 +18,8 @@ def create_post():
     if "title" not in request_json:
         raise BadRequest("Title is required")
     else:
-        post = dao.insert(request_json["title"], request_json["content"])
+        user, _ = resolve_user()
+        post = dao.insert(request_json["title"], request_json["content"], user.id)
         return post_to_json(post)
 
 
