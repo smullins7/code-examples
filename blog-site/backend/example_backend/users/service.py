@@ -1,4 +1,5 @@
 import re
+from functools import wraps
 from typing import Dict
 
 import flask
@@ -11,6 +12,8 @@ from example_backend.users.dao import User
 
 AUTH_HEADER_PAT = re.compile(r"^Bearer (?P<token>.*)$")
 CLIENT_ID = "362134854545-t9ni0g6vtl1igvv2gmk8ehjk5tr315p4.apps.googleusercontent.com"
+MISSING_MESSAGE = "Authorization header is required"
+MALFORMED_MESSAGE = "Authorization header malformed, value must be 'Bearer <jwt token>`"
 
 
 def verify_token(token: str) -> Dict:
@@ -27,12 +30,38 @@ def _resolve_user(token: str) -> tuple[User, Dict]:
 
 
 def resolve_user() -> tuple[User, Dict]:
+    """
+    Resolve a User from the request, if the User is new it is persisted as well
+    """
     if "Authorization" not in flask.request.headers:
-        raise BadRequest("Authorization header required")
+        raise BadRequest(MISSING_MESSAGE)
 
     auth_header = flask.request.headers["Authorization"]
     m = AUTH_HEADER_PAT.match(auth_header)
     if not m:
-        raise BadRequest("Authorization header malformed, value must be 'Bearer <jwt token>")
+        raise BadRequest(MALFORMED_MESSAGE)
 
-    return _resolve_user(m.group("token"))
+    try:
+        return _resolve_user(m.group("token"))
+    except ValueError as e:
+        raise BadRequest(str(e))
+
+
+def auth_required(inject_user=False, inject_id_info=False):
+    """
+    A decorator that resolves a User and optionally injects it into the decorated function
+    """
+
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            user, id_info = resolve_user()
+            if inject_user:
+                kwargs["user"] = user
+            if inject_id_info:
+                kwargs["id_info"] = id_info
+            return f(*args, **kwargs)
+
+        return decorated_function
+
+    return decorator

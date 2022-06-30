@@ -1,7 +1,7 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy_serializer import SerializerMixin
 
-from example_backend.app import db
+from example_backend.extensions import db
 
 
 class Comments(db.Model, SerializerMixin):
@@ -39,6 +39,8 @@ def find_all():
 
 def delete(comment_id):
     comment = find(comment_id)
+    if not comment:
+        return None
     db.session.delete(comment)
     db.session.commit()
 

@@ -2,28 +2,29 @@ import http
 from typing import List
 
 import flask
-from flask import jsonify, request
+from flask import Blueprint, jsonify, request
 
-from example_backend.app import app
 from example_backend.exc.bad_request import BadRequest
 from example_backend.exc.not_found import NotFound
 from example_backend.posts import dao
-from example_backend.users.service import resolve_user
+from example_backend.users.service import auth_required
+
+blueprint = Blueprint("post", __name__, url_prefix="/posts")
 
 
-@app.route("/posts", methods=("POST",))
-def create_post():
+@blueprint.route("", methods=("POST",))
+@auth_required(inject_user=True)
+def create_post(user):
     request_json = flask.request.json
 
     if "title" not in request_json:
         raise BadRequest("Title is required")
     else:
-        user, _ = resolve_user()
         post = dao.insert(request_json["title"], request_json["content"], user.id)
         return post_to_json(post)
 
 
-@app.route("/posts/<int:post_id>", methods=("GET",))
+@blueprint.route("/<int:post_id>", methods=("GET",))
 def get_post(post_id):
     post = dao.find(post_id)
     if post is None:
@@ -31,7 +32,8 @@ def get_post(post_id):
     return post_to_json(post)
 
 
-@app.route("/posts/<int:post_id>", methods=("PUT",))
+@blueprint.route("/<int:post_id>", methods=("PUT",))
+@auth_required()
 def edit_post(post_id):
     get_post(post_id)
     json_data = request.get_json()
@@ -42,14 +44,15 @@ def edit_post(post_id):
     return post_to_json(updated)
 
 
-@app.route("/posts/<int:post_id>", methods=("DELETE",))
+@blueprint.route("/<int:post_id>", methods=("DELETE",))
+@auth_required()
 def delete_post(post_id):
     get_post(post_id)
     dao.delete(post_id)
     return "", http.HTTPStatus.NO_CONTENT
 
 
-@app.route("/posts")
+@blueprint.route("")
 def index():
     return posts_to_json(dao.find_all())
 

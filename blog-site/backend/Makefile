@@ -28,11 +28,11 @@ format:
 test: lint
 	@echo
 	@echo --- Test ---
-	pytest -v --cov-report term --cov
+	pytest -v --cov-report term --cov --cov-report html
 
 
 start: export FLASK_ENV=development
-start: export FLASK_APP=example_backend.app
+start: export FLASK_APP=start-app.py
 
 start:
 	@echo

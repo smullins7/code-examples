@@ -1,6 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 
-from example_backend.app import db
+from example_backend.extensions import db
 
 
 class User(db.Model, SerializerMixin):
@@ -26,7 +26,7 @@ def insert(email, name):
 
 
 def find(user_id):
-    return db.session.query(User).get(user_id).first()
+    return db.session.query(User).get(user_id)
 
 
 def find_by_email(email):
