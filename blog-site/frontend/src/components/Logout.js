@@ -6,7 +6,9 @@ class Logout extends Component {
     logout() {
         console.log("logging out");
         const { cookies } = this.props;
-        cookies.remove("logged-in-user");
+        console.log(cookies.cookies);
+        cookies.remove("logged-in-user", { path: '/' } );
+        console.log(cookies.cookies);
     }
     render() {
         const { cookies } = this.props;

@@ -3,7 +3,6 @@ import {Route, Switch} from "react-router-dom";
 import About from "../pages/About";
 import NotFound from "../pages/NotFound";
 import BlogPost from "./BlogPost";
-import BlogPostDelete from "./BlogPostDelete";
 import BlogPostForm from "./BlogPostForm";
 import BlogPostsList from "./BlogPostsList";
 import Footer from "./Footer";
@@ -26,7 +25,6 @@ class Main extends Component {
                         </Route>
                         <Route path="/posts/:postId" component={BlogPost}/>
                         <Route path={["/post-form/:postId", "/post-form"]} component={BlogPostForm}/>
-                        <Route path="/post-del/:postId" component={BlogPostDelete}/>
                         <Route path="/settings">
                             <UserSettings/>
                         </Route>

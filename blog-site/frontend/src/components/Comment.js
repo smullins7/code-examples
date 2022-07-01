@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, {Component, Fragment} from "react";
 import {Button, Form, Modal} from "react-bootstrap";
+import {withCookies} from "react-cookie";
 
 class Comment extends Component {
     constructor(props){
@@ -13,9 +14,14 @@ class Comment extends Component {
     }
     deleteComment() {
         console.log("deleting comment");
+        const { cookies } = this.props;
+        const user = cookies.get("logged-in-user");
         try {
             fetch(`http://127.0.0.1:4000/posts/${this.state.postId}/comments/${this.state.comment.id}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${user.jwt}`
+                },
             }).then(response => response.text())
                 .then(data => {
                     console.log(data);
@@ -30,11 +36,14 @@ class Comment extends Component {
             console.log("Ignoring update");
             return;
         }
+        const { cookies } = this.props;
+        const user = cookies.get("logged-in-user");
         try {
             fetch(`http://127.0.0.1:4000/posts/${this.state.postId}/comments/${this.state.comment.id}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.jwt}`
                 },
                 body: JSON.stringify({
                     content: commentText,
@@ -48,6 +57,7 @@ class Comment extends Component {
                     console.log(res.status, res.data);
                     this.setState({comment: res.data})
                     this.toggleModal(false);
+                    this.state.parentHook(this.state.comment);
                 }));
         } catch (err) {
             console.log(err);
@@ -60,22 +70,28 @@ class Comment extends Component {
         this.setState({[event.target.name]: event.target.value})
     }
     render() {
+        const { cookies } = this.props;
+        const loggedInUser = cookies.get("logged-in-user");
         const handleClose = () => this.toggleModal(false);
         const handleShow = () => this.toggleModal(true);
         return (
             <div className="card bg-light mb-3 ml-2 mt-4" key={this.state.comment.id} style={{"maxWidth": "35rem"}}>
                 <div className="card-header">
-                    User Name TODO @ {moment.utc(this.state.comment.created).format("LLLL")}
+                    {this.state.comment.user.name} @ {moment.utc(this.state.comment.created).format("LLLL")}
                 </div>
                 <div className="card-body">
                     <p className="card-text"><span style={{"whiteSpace": "pre-line"}}>{this.state.comment.content}</span></p>
                 </div>
                 <div>
-                    <Button variant="secondary" onClick={handleShow} className="m-1" style={{"maxWidth": "8rem"}}>
-                        Edit Comment
-                    </Button>
-                    <button onClick={() => this.deleteComment()} type="button" className="btn btn-danger m-1" style={{"maxWidth": "6rem"}}>
-                        <i className="bi bi-trash"/> Delete</button>
+                    {loggedInUser?.id === this.state.comment.user.id ? (
+                        <>
+                            <Button variant="secondary" onClick={handleShow} className="m-1" style={{"maxWidth": "8rem"}}>
+                                Edit Comment
+                            </Button>
+                            <button onClick={() => this.deleteComment()} type="button" className="btn btn-danger m-1" style={{"maxWidth": "6rem"}}>
+                                <i className="bi bi-trash"/> Delete</button>
+                        </>
+                    ) : null}
                 </div>
                 <Modal show={this.state.showModal} onHide={handleClose} centered>
                     <Modal.Header closeButton>
@@ -112,11 +128,14 @@ export class CommentModal extends Component {
         }
     }
     addComment(content) {
+        const { cookies } = this.props;
+        const user = cookies.get("logged-in-user");
         try {
             fetch(`http://127.0.0.1:4000/posts/${this.state.postId}/comments`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.jwt}`
                 },
                 body: JSON.stringify({
                     content: content,
@@ -142,13 +161,19 @@ export class CommentModal extends Component {
         this.setState({[event.target.name]: event.target.value})
     }
     render() {
+        const { cookies } = this.props;
+        const isLoggedIn = cookies.get("logged-in-user") !== undefined;
         const handleClose = () => this.toggleModal(false);
         const handleShow = () => this.toggleModal(true);
         return (
             <Fragment>
-                <Button variant="secondary" onClick={handleShow}>
-                    Add Comment
-                </Button>
+                {isLoggedIn ? (
+                    <Button variant="secondary" onClick={handleShow}>
+                        Add Comment
+                    </Button>
+                ) : (
+                    <Button type="button" variant="secondary" disabled>Must login to add comments</Button>
+                )}
                 <Modal show={this.state.showModal} onHide={handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>New Comment</Modal.Title>
@@ -175,4 +200,5 @@ export class CommentModal extends Component {
     }
 }
 
-export default Comment
+CommentModal = withCookies(CommentModal)
+export default withCookies(Comment)
