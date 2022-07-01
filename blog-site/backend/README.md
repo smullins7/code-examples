@@ -57,12 +57,12 @@ make start
 
 Whenever making changes to the models run this command once the changes are in place:
 ```
-flask db migrate -m "Your message here"
+FLASK_APP=example_backend.app poetry run flask db migrate -m "things"
 ```
 
 This will produce a migration script like:
 ```
-example/migrations/versions/177e5febe83c_.py
+example/migrations/versions/177e5febe83c_things.py
 ```
 
 You can verify the script looks correct. When the application starts up, database migrations will run automatically to apply those changes.

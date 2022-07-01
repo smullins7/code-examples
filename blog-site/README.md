@@ -106,4 +106,5 @@ Now the database data has been replaced with the contents from the snapshot.
 
 # TODO
 
+0. user settings (just display date as an example, relative or absolute)
 1. audit log/history
