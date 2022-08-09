@@ -1,6 +1,6 @@
 import re
 from functools import wraps
-from typing import Dict
+from typing import Dict, Tuple
 
 import flask
 from google.auth.transport import requests
@@ -21,7 +21,7 @@ def verify_token(token: str) -> Dict:
     return id_token.verify_oauth2_token(token, request, CLIENT_ID)
 
 
-def _resolve_user(token: str) -> tuple[User, Dict]:
+def _resolve_user(token: str) -> Tuple[User, Dict]:
     id_info = verify_token(token)
     user = dao.find_by_email(id_info["email"])
     if not user:
@@ -29,7 +29,7 @@ def _resolve_user(token: str) -> tuple[User, Dict]:
     return user, id_info
 
 
-def resolve_user() -> tuple[User, Dict]:
+def resolve_user() -> Tuple[User, Dict]:
     """
     Resolve a User from the request, if the User is new it is persisted as well
     """

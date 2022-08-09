@@ -2,6 +2,7 @@
 
 Example REST service using Flask. This repo is meant for demonstration/teaching purposes only. Production concerns like performance, scalability and security are absent from this project on purpose.
 
+
 ## Local Development
 
 ### Docker
