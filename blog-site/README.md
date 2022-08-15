@@ -67,6 +67,7 @@ flask alchemydumps create
 The above command will print output like the following:
 
 > ==> 2 rows from Comments saved as /app/alchemydumps-backup/db-bkp-20220628204546-Comments.gz
+>
 > ==> 2 rows from Posts saved as /app/alchemydumps-backup/db-bkp-20220628204546-Posts.gz
 
 That data is saved in the listed diretory, which is mounted locally to `backend/db-backups` so that you may destroy the `backend` container and not lose the snapshot. Check the `backend/db-backups` directory and you should see those same files listed:
