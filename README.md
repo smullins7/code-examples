@@ -1,6 +1,9 @@
 # Code Examples
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+<a href="https://results.pre-commit.ci/latest/github/smullins7/code-examples/main">
+  <img src="https://results.pre-commit.ci/badge/github/smullins7/code-examples/main.svg" alt="pre-commit.ci status" style="max-width:100%;">
+</a>
 
 This repo is a hodge podge of coding examples primarily meant for teaching and mentoring. Nothing is meant to be taken as production level code, but rather examples are kept simple for easier demonstration and learning.
 
