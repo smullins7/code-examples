@@ -1,9 +1,10 @@
 # Code Examples
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-<a href="https://results.pre-commit.ci/latest/github/smullins7/code-examples/main">
-  <img src="https://results.pre-commit.ci/badge/github/smullins7/code-examples/main.svg" alt="pre-commit.ci status" style="max-width:100%;">
-</a>
+[![pre-commit-build](https://results.pre-commit.ci/badge/github/smullins7/code-examples/main.svg)](https://results.pre-commit.ci/latest/github/smullins7/code-examples/main)
+
+[![backend tests](https://github.com/smullins7/code-examples/actions/workflows/blog_site_backend.yml/badge.svg)](https://github.com/smullins7/code-examples/actions/)
+
+[![Coverage Status](https://coveralls.io/repos/github/smullins7/code-examples/badge.svg?branch=main)](https://coveralls.io/github/smullins7/code-examples?branch=main)
 
 This repo is a hodge podge of coding examples primarily meant for teaching and mentoring. Nothing is meant to be taken as production level code, but rather examples are kept simple for easier demonstration and learning.
 

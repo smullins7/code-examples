@@ -25,10 +25,13 @@ format:
 	pre-commit run --all-files
 
 
-test: lint
+test-only:
 	@echo
 	@echo --- Test ---
-	pytest -v --cov-report term --cov --cov-report html
+	coverage run --source=example_backend -m pytest tests/
+	coveralls --service=github
+
+test: lint test-only
 
 
 start: export FLASK_ENV=development
