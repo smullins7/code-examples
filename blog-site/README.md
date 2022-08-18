@@ -107,5 +107,8 @@ Now the database data has been replaced with the contents from the snapshot.
 
 # TODO
 
-0. user settings (just display date as an example, relative or absolute)
-1. audit log/history
+0. user settings (something like display date as an example, relative or absolute)
+1. updated_at timestamps
+2. audit log/history
+3. soft deletes
+4. use post.comments_count on posts listing, make separate call for post comments on details page

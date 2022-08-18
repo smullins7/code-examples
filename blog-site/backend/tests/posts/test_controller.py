@@ -34,6 +34,7 @@ class PostsControllerTestCase(BaseControllerTestCase):
             self.assertEqual(1, response_json["id"])
             self.assertEqual("title-1", response_json["title"])
             self.assertEqual("content-1", response_json["content"])
+            self.assertEqual(0, response_json["comments_count"])
             self.assertIsNotNone(response_json.get("created"))
 
     def test_edit_post_no_title(self):

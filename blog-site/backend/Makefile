@@ -29,7 +29,13 @@ test-only:
 	@echo
 	@echo --- Test ---
 	coverage run --source=example_backend -m pytest tests/
+
+
+coveralls: test-only
+	@echo
+	@echo --- Sending coverage for github action ---
 	coveralls --service=github
+
 
 test: lint test-only
 
@@ -42,4 +48,4 @@ start:
 	@echo --- Starting local server ---
 	poetry run ./entrypoint.sh
 
-.PHONY: clean lint test start
+.PHONY: clean lint test start format test-only coveralls version

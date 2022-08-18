@@ -12,7 +12,7 @@ To run the entire stack simply do the following from the _parent_ directory:
 docker-compose up -d --build
 ```
 
-This will start up the front end, back end and database. You can access the front end in your browser via [http://localhost:3000](localhost:3000)
+This will start up the front end, back end and database. You can access the front end in your browser via [localhost:3000](http://localhost:3000)
 
 If you want to curl the backend directly you can, e.g.
 ```shell
@@ -38,7 +38,7 @@ Run the app
 docker run -d -p 4000:4000 flask-example
 ```
 
-Then visit this URL in your browser: `http://localhost:4000`
+Then visit [localhost:4000](http://localhost:4000)
 
 ### Non-Docker
 
@@ -67,11 +67,3 @@ example/migrations/versions/177e5febe83c_things.py
 ```
 
 You can verify the script looks correct. When the application starts up, database migrations will run automatically to apply those changes.
-
-## Exercises
-
-The following are small tasks/problems to get familiar with this project:
-
- - Add `updated_at` timestamps to posts and comments. This will involve a database migration and code change
- - When returning a post via `/posts` or `/posts/<post-id>`, add an attribute in the JSON response for the number of comments instead of all the comments themselves
- - Replace the existing delete functionality with "soft deletes"

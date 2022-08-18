@@ -24,4 +24,4 @@ jobs:
         pip install pytest
         pip install pytest-cov
         cd blog-site/backend
-        make test-only
+        make coveralls

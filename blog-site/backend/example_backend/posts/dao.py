@@ -8,6 +8,7 @@ class Posts(db.Model, SerializerMixin):
     __tablename__ = "posts"
 
     serialize_only = ("id", "created", "title", "content", "comments", "user.id", "user.name")
+    serialize_rules = ("comments_count",)
 
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, server_default=db.func.now())
@@ -22,6 +23,9 @@ class Posts(db.Model, SerializerMixin):
         self.content = content
         self.user_id = user_id
 
+    def comments_count(self):
+        return len(self.comments)
+
 
 def insert(title, content, user_id):
     post = Posts(title=title, content=content, user_id=user_id)
@@ -30,7 +34,7 @@ def insert(title, content, user_id):
     return post
 
 
-def find(post_id):
+def find(post_id) -> Posts:
     return db.session.query(Posts).get(post_id)
 
 
